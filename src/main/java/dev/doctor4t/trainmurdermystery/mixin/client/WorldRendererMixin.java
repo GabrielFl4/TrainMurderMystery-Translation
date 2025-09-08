@@ -80,7 +80,7 @@ public abstract class WorldRendererMixin {
         int tileLength = 32 * chunkSize;
         int tileSize = tileLength * 3;
 
-        float time = ticks + client.getRenderTickCounter().getTickDelta(true); // TODO: replace with a proper time
+        float time = ticks + client.getRenderTickCounter().getTickDelta(true);
 
         while (bl2 ? objectListIterator.hasNext() : objectListIterator.hasPrevious()) {
             boolean tooFar = false;

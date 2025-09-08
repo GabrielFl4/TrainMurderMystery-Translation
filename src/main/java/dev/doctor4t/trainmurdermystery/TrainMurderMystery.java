@@ -33,7 +33,6 @@ public class TrainMurderMystery implements ModInitializer {
 
     }
 
-// TODO: Disable chat & death messages
 // TODO: Disable off-hand
 // TODO: Simplify opened inventory
 // TODO: Add roles

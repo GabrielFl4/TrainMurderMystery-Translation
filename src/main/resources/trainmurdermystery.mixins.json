@@ -13,6 +13,7 @@
     "client.CameraMixin",
     "client.ChatHudMixin",
     "client.ClientWorldMixin",
+    "client.KeyBindingMixin",
     "client.PlayerEntityRendererMixin",
     "client.WorldRendererMixin"
   ]
