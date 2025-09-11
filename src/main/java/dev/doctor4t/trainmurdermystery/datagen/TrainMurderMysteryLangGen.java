@@ -183,6 +183,7 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
         builder.add(TrainMurderMysteryBlocks.ELEVATOR_BUTTON, "Elevator Button");
         builder.add(TrainMurderMysteryBlocks.GOLD_ORNAMENT, "Golden Ornament");
         builder.add(TrainMurderMysteryBlocks.SMALL_GLASS_DOOR, "Small Glass Door");
+        builder.add(TrainMurderMysteryBlocks.NAVY_STEEL, "Navy Steel");
         builder.add(TrainMurderMysteryBlocks.NAVY_STEEL_PANEL, "Navy Steel Panel");
         builder.add(TrainMurderMysteryBlocks.NAVY_STEEL_TILES, "Navy Steel Tiles");
         builder.add(TrainMurderMysteryBlocks.NAVY_STEEL_TILES_PANEL, "Navy Steel Tiles Panel");
@@ -190,6 +191,7 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
         builder.add(TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL_STAIRS, "Smooth Navy Steel stairs");
         builder.add(TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL_SLAB, "Smooth Navy Steel slab");
         builder.add(TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL_PANEL, "Smooth Navy Steel panel");
+        builder.add(TrainMurderMysteryBlocks.SMOOTH_NAVY_STEEL_WALL, "Smooth Navy Steel Wall");
 
         builder.add(TrainMurderMysteryItems.ROOM_KEY, "Room Key");
         builder.add(TrainMurderMysteryItems.LOCKPICK, "Lockpick");

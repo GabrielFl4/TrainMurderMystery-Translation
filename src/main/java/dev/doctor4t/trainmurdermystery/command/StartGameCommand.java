@@ -23,19 +23,7 @@ public class StartGameCommand {
     }
 
     private static int startGame(ServerCommandSource source) {
-        ServerWorld world = source.getWorld();
-
-        TrainMurderMysteryComponents.TRAIN.get(world).setTrainSpeed(130);
-
-//        List<ServerPlayerEntity> players = world.getPlayers().stream().filter(serverPlayerEntity -> !serverPlayerEntity.isInCreativeMode() && !serverPlayerEntity.isSpectator()).toList();
-        List<ServerPlayerEntity> players = world.getPlayers().stream().toList();
-        for (ServerPlayerEntity player : players) {
-            PlayerRoleComponent.Role role = PlayerRoleComponent.Role.getRandomRole();
-            TrainMurderMysteryComponents.ROLE.get(player).setRole(role);
-            player.sendMessage(Text.translatable("tip.role." + role.name().toLowerCase(Locale.ROOT)));
-        }
-
-
+        TrainMurderMysteryComponents.GAME.get(source.getWorld()).startGame();
         return 1;
     }
 }

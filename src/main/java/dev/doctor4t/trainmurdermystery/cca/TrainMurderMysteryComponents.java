@@ -11,11 +11,13 @@ import org.ladysnake.cca.api.v3.world.WorldComponentInitializer;
 
 public class TrainMurderMysteryComponents implements WorldComponentInitializer, EntityComponentInitializer {
     public static final ComponentKey<WorldTrainComponent> TRAIN = ComponentRegistry.getOrCreate(TrainMurderMystery.id("train"), WorldTrainComponent.class);
+    public static final ComponentKey<WorldGameComponent> GAME = ComponentRegistry.getOrCreate(TrainMurderMystery.id("game"), WorldGameComponent.class);
     public static final ComponentKey<PlayerRoleComponent> ROLE = ComponentRegistry.getOrCreate(TrainMurderMystery.id("role"), PlayerRoleComponent.class);
 
     @Override
     public void registerWorldComponentFactories(WorldComponentFactoryRegistry registry) {
         registry.register(TRAIN, WorldTrainComponent::new);
+        registry.register(GAME, WorldGameComponent::new);
     }
 
     @Override
