@@ -5,11 +5,12 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
 import dev.doctor4t.trainmurdermystery.client.render.entity.PlayerBodyEntityRenderer;
 import dev.doctor4t.trainmurdermystery.entity.PlayerBodyEntity;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.entity.*;
+import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.SkinTextures;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.resource.ResourceManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,9 +42,14 @@ public class EntityRendererDispatchMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
     public <T extends Entity> void tmm$addPlayerBodyRenderer(T entity, CallbackInfoReturnable<EntityRenderer<? super T>> cir) {
         if (entity instanceof PlayerBodyEntity body) {
-            SkinTextures.Model model = TrainMurderMysteryClient.PLAYER_ENTRIES_CACHE.get(body.getPlayerUuid()).getSkinTextures().model();
-            EntityRenderer<? extends PlayerBodyEntity> entityRenderer = this.bodyModelRenderers.get(model);
-            cir.setReturnValue((EntityRenderer<? super T>) (entityRenderer != null ? entityRenderer : (EntityRenderer) this.bodyModelRenderers.get(SkinTextures.Model.WIDE)));
+            PlayerListEntry playerListEntry = TrainMurderMysteryClient.PLAYER_ENTRIES_CACHE.get(body.getPlayerUuid());
+            if (playerListEntry == null) {
+                cir.setReturnValue((EntityRenderer<? super T>) this.bodyModelRenderers.get(SkinTextures.Model.WIDE));
+            } else {
+                SkinTextures.Model model = playerListEntry.getSkinTextures().model();
+                EntityRenderer<? extends PlayerBodyEntity> entityRenderer = this.bodyModelRenderers.get(model);
+                cir.setReturnValue((EntityRenderer<? super T>) (entityRenderer != null ? entityRenderer : (EntityRenderer) this.bodyModelRenderers.get(SkinTextures.Model.WIDE)));
+            }
         }
     }
 

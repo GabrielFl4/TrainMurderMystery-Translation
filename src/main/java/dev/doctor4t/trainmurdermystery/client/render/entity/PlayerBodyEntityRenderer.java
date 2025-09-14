@@ -1,5 +1,6 @@
 package dev.doctor4t.trainmurdermystery.client.render.entity;
 
+import dev.doctor4t.trainmurdermystery.TrainMurderMystery;
 import dev.doctor4t.trainmurdermystery.client.TrainMurderMysteryClient;
 import dev.doctor4t.trainmurdermystery.client.model.TrainMurderMysteryEntityModelLayers;
 import dev.doctor4t.trainmurdermystery.entity.PlayerBodyEntity;
@@ -13,9 +14,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
 public class PlayerBodyEntityRenderer<T extends LivingEntity, M extends EntityModel<T>> extends LivingEntityRenderer<PlayerBodyEntity, PlayerEntityModel<PlayerBodyEntity>> {
+    public static final Identifier DEFAULT_TEXTURE = TrainMurderMystery.id("textures/entity/player_body_default.png");
+
     public PlayerBodyEntityRenderer(EntityRendererFactory.Context ctx, boolean slim) {
         super(ctx, new PlayerEntityModel<>(ctx.getPart(slim ? TrainMurderMysteryEntityModelLayers.PLAYER_BODY_SLIM : TrainMurderMysteryEntityModelLayers.PLAYER_BODY), slim), 0F);
     }
@@ -45,7 +49,7 @@ public class PlayerBodyEntityRenderer<T extends LivingEntity, M extends EntityMo
         if (playerListEntry != null) {
             return playerListEntry.getSkinTextures().texture();
         } else {
-            return Identifier.ofVanilla("missing");
+            return DEFAULT_TEXTURE;
         }
     }
 
@@ -58,11 +62,14 @@ public class PlayerBodyEntityRenderer<T extends LivingEntity, M extends EntityMo
 
     @Override
     protected void setupTransforms(PlayerBodyEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+        int animTickEnd = 6;
+        float animProgress = Math.min(entity.age + tickDelta, animTickEnd) / animTickEnd;
+
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90 - bodyYaw));
-        matrices.translate(0F, 0.1f, 0F);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(this.getLyingAngle(entity)));
+        matrices.translate(0F, animProgress * 0.15f, 0F);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(animProgress * this.getLyingAngle(entity)));
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));
-        matrices.translate(0F, -.95f, 0F);
+//        matrices.translate(0F, -.95f, 0F);
     }
 
     @Override

@@ -19,7 +19,6 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder builder) {
         builder.add(TrainMurderMysteryEntities.SEAT, "Seat");
         builder.add(TrainMurderMysteryEntities.PLAYER_BODY, "Body");
-        builder.add(TrainMurderMysteryEntities.PLAYER_BODY_SLIM, "Body");
 
         builder.add(TrainMurderMysteryBlocks.STAINLESS_STEEL_VENT_SHAFT, "Stainless Steel Vent Shaft");
         builder.add(TrainMurderMysteryBlocks.STAINLESS_STEEL_VENT_HATCH, "Stainless Steel Vent Hatch");
@@ -214,6 +213,7 @@ public class TrainMurderMysteryLangGen extends FabricLanguageProvider {
 
         builder.add("tip.door.requires_key", "This door is locked and requires a key to be opened.");
         builder.add("tip.door.requires_different_key", "This door is locked and requires a different key to be opened.");
+        builder.add("tip.door.jammed", "This door is jammed and cannot be opened at the moment!");
 
         builder.add("tip.knife.tooltip1", "Right-click to use, hold for a second and get close to your victim!");
         builder.add("tip.knife.tooltip2", "After a kill, cannot be used for 3 minutes.");
