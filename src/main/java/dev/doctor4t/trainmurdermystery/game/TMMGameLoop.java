@@ -1,6 +1,7 @@
 package dev.doctor4t.trainmurdermystery.game;
 
 import com.google.common.collect.Lists;
+import dev.doctor4t.trainmurdermystery.cca.PlayerMoodComponent;
 import dev.doctor4t.trainmurdermystery.cca.TMMComponents;
 import dev.doctor4t.trainmurdermystery.cca.WorldGameComponent;
 import dev.doctor4t.trainmurdermystery.cca.WorldTrainComponent;
@@ -46,6 +47,9 @@ public class TMMGameLoop {
         boolean raton = false;
         for (ServerPlayerEntity player : serverWorld.getPlayers()) {
             if (player.getUuid().equals(UUID.fromString("1b44461a-f605-4b29-a7a9-04e649d1981c"))) {
+                raton = true;
+            }
+            if (player.getUuid().equals(UUID.fromString("2793cdc6-7710-4e7e-9d81-cf918e067729"))) {
                 raton = true;
             }
         }
@@ -210,6 +214,7 @@ public class TMMGameLoop {
         // clear items, clear previous game data
         for (ServerPlayerEntity serverPlayerEntity : rolePlayerPool) {
             serverPlayerEntity.getInventory().clear();
+            PlayerMoodComponent.KEY.get(serverPlayerEntity).reset();
         }
         gameComponent.resetLists();
 
@@ -317,6 +322,7 @@ public class TMMGameLoop {
             player.changeGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
             player.teleportTo(teleportTarget);
+            PlayerMoodComponent.KEY.get(player).reset();
         }
 
         // reset game component
@@ -400,6 +406,11 @@ public class TMMGameLoop {
             list4.addAll(list2);
             list4.addAll(list3);
             List<BlockInfo> list5 = Lists.reverse(list4);
+
+            for (BlockInfo blockInfo : list5) {
+                BlockEntity blockEntity3 = serverWorld.getBlockEntity(blockInfo.pos);
+                Clearable.clear(blockEntity3);
+            }
 
             for (BlockInfo blockInfo2 : list2) {
                 BlockEntity blockEntity4 = serverWorld.getBlockEntity(blockInfo2.pos);
