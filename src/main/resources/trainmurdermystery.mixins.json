@@ -3,6 +3,7 @@
   "package": "dev.doctor4t.trainmurdermystery.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractBlockSettingsMixin",
     "DedicatedPlayerManagerMixin",
     "EntityMixin",
     "HungerManagerMixin",
