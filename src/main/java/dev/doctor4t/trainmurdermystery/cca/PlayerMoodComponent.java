@@ -85,6 +85,7 @@ public class PlayerMoodComponent implements AutoSyncedComponent, ServerTickingCo
     }
 
     private @Nullable TrainTask generateTask() {
+        if (!this.tasks.isEmpty()) return null;
         var map = new HashMap<Task, Float>();
         var total = 0f;
         for (var task : Task.values()) {
