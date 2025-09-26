@@ -74,7 +74,7 @@ public class LimitedInventoryScreen extends LimitedHandledScreen<PlayerScreenHan
         }
 
         private void drawShopSlotHighlight(DrawContext context, int x, int y, int z) {
-            int color = -2130706433;
+            int color = 0x90FFBF49;
             context.fillGradient(RenderLayer.getGuiOverlay(), x, y, x + 16, y + 14, color, color, z);
             context.fillGradient(RenderLayer.getGuiOverlay(), x, y+14, x + 15, y + 15, color, color, z);
             context.fillGradient(RenderLayer.getGuiOverlay(), x, y+15, x + 14, y + 16, color, color, z);
