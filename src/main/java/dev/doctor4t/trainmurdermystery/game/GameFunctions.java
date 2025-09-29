@@ -16,9 +16,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -438,6 +436,6 @@ public class GameFunctions {
     }
 
     public enum WinStatus {
-        NONE, HITMEN, PASSENGERS, TIME
+        NONE, KILLERS, PASSENGERS, TIME
     }
 }

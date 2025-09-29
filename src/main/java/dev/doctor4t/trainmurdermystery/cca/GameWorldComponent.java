@@ -228,7 +228,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
                 }
 
                 // check killer win condition: kill count reached
-                GameFunctions.WinStatus winStatus = killsLeft <= 0 ? GameFunctions.WinStatus.HITMEN : GameFunctions.WinStatus.NONE;
+                GameFunctions.WinStatus winStatus = killsLeft <= 0 ? GameFunctions.WinStatus.KILLERS : GameFunctions.WinStatus.NONE;
 
                 // check passenger win condition (all killers are dead)
                 if (winStatus == GameFunctions.WinStatus.NONE) {
