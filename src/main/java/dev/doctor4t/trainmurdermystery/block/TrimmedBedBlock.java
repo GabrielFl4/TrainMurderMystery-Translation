@@ -13,15 +13,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
@@ -29,6 +32,7 @@ import net.minecraft.world.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TrimmedBedBlock extends BedBlock {
@@ -153,12 +157,30 @@ public class TrimmedBedBlock extends BedBlock {
                 }
             }
 
-            player.trySleep(pos).ifLeft(reason -> {
-                if (reason.getMessage() != null) {
-                    player.sendMessage(reason.getMessage(), true);
+            if (state.get(OCCUPIED)) {
+                if (!this.wakeVillager(world, pos)) {
+                    player.sendMessage(Text.translatable("block.minecraft.bed.occupied"), true);
                 }
-            });
-            return ActionResult.SUCCESS;
+
+                return ActionResult.SUCCESS;
+            } else {
+                player.trySleep(pos).ifLeft(reason -> {
+                    if (reason.getMessage() != null) {
+                        player.sendMessage(reason.getMessage(), true);
+                    }
+                });
+                return ActionResult.SUCCESS;
+            }
+        }
+    }
+
+    private boolean wakeVillager(World world, BlockPos pos) {
+        List<VillagerEntity> list = world.getEntitiesByClass(VillagerEntity.class, new Box(pos), LivingEntity::isSleeping);
+        if (list.isEmpty()) {
+            return false;
+        } else {
+            (list.get(0)).wakeUp();
+            return true;
         }
     }
 

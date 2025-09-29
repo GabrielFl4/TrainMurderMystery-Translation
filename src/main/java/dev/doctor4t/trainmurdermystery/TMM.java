@@ -157,7 +157,6 @@ public class TMM implements ModInitializer {
 // TODO: Bed at the back for 14+ players games
 // TODO: Remove loud outside ambience for spectators + shake
 // TODO: Invisible note in hand + not in psychosis pool
-// TODO: fix sleeping inside people
 // TODO: Killers can see the mood of players
 // TODO: Heartbeat sanity low
 // TODO: Fix poison visual not getting removed
