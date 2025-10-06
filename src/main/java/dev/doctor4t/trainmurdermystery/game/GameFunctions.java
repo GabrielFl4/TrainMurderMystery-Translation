@@ -297,6 +297,7 @@ public class GameFunctions {
             TrainVoicePlugin.resetPlayer(player.getUuid());
 
             player.changeGameMode(GameMode.ADVENTURE);
+            player.wakeUp();
             var teleportTarget = new TeleportTarget(world, GameConstants.SPAWN_POS, Vec3d.ZERO, 90, 0, TeleportTarget.NO_OP);
             player.teleportTo(teleportTarget);
         }

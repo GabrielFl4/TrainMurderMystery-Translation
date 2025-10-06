@@ -187,7 +187,3 @@ public class TMM implements ModInitializer {
 // POST VIDEO
 // TORECORD: Ability to customize time of day for supporters + snow density
 // TODO: Watermark?
-
-
-// TODO: Disable mounting chairs if already on one
-// TODO: wake up players before tping
