@@ -269,24 +269,10 @@ public class GameFunctions {
         for (var entity : world.getEntitiesByType(TMMEntities.FIRECRACKER, entity -> true)) entity.discard();
         for (var entity : world.getEntitiesByType(TMMEntities.NOTE, entity -> true)) entity.discard();
 
-        // reset all player data
+        // reset all players
         for (var player : world.getPlayers()) {
-            ServerPlayNetworking.send(player, new AnnounceEndingPayload());
-            player.dismountVehicle();
-            player.getInventory().clear();
-            PlayerMoodComponent.KEY.get(player).reset();
-            PlayerShopComponent.KEY.get(player).reset();
-            PlayerPoisonComponent.KEY.get(player).reset();
-            PlayerPsychoComponent.KEY.get(player).reset();
-            PlayerNoteComponent.KEY.get(player).reset();
-            TrainVoicePlugin.resetPlayer(player.getUuid());
-
-            player.changeGameMode(GameMode.ADVENTURE);
-            player.wakeUp();
-            var teleportTarget = new TeleportTarget(world, GameConstants.SPAWN_POS, Vec3d.ZERO, 90, 0, TeleportTarget.NO_OP);
-            player.teleportTo(teleportTarget);
+            resetPlayer(player);
         }
-
 
         // reset game component
         GameTimeComponent.KEY.get(world).reset();
@@ -296,6 +282,23 @@ public class GameFunctions {
         gameComponent.setGameStatus(GameWorldComponent.GameStatus.INACTIVE);
         trainComponent.setTime(0);
         gameComponent.sync();
+    }
+
+    public static void resetPlayer(ServerPlayerEntity player) {
+        ServerPlayNetworking.send(player, new AnnounceEndingPayload());
+        player.dismountVehicle();
+        player.getInventory().clear();
+        PlayerMoodComponent.KEY.get(player).reset();
+        PlayerShopComponent.KEY.get(player).reset();
+        PlayerPoisonComponent.KEY.get(player).reset();
+        PlayerPsychoComponent.KEY.get(player).reset();
+        PlayerNoteComponent.KEY.get(player).reset();
+        TrainVoicePlugin.resetPlayer(player.getUuid());
+
+        player.changeGameMode(GameMode.ADVENTURE);
+        player.wakeUp();
+        var teleportTarget = new TeleportTarget(player.getServerWorld(), GameConstants.SPAWN_POS, Vec3d.ZERO, 90, 0, TeleportTarget.NO_OP);
+        player.teleportTo(teleportTarget);
     }
 
     public static boolean isPlayerEliminated(PlayerEntity player) {

@@ -341,6 +341,13 @@ public class GameWorldComponent implements AutoSyncedComponent, ClientTickingCom
                     }
                     GameFunctions.stopGame(serverWorld);
                 }
+            } else {
+                // if not running and spectators respawn them
+                for (ServerPlayerEntity player : serverWorld.getPlayers()) {
+                    if (player.isSpectator()) {
+                        GameFunctions.resetPlayer(player);
+                    }
+                }
             }
         }
     }
