@@ -147,16 +147,13 @@ public abstract class DefaultChunkRendererMixin {
                 finalZ = v3;
             }
 
-            if (Math.abs(finalX) < (TMMClient.trainComponent.getTimeOfDay() == TrainWorldComponent.TimeOfDay.SUNDOWN ? 320 : 160)) {
-                finalX = (blockPos.getX() - finalX) - camera.fracX;
-                finalY = (blockPos.getY() - finalY) - camera.fracY;
-                finalZ = (blockPos.getZ() - finalZ) - camera.fracZ;
+            finalX = (blockPos.getX() - finalX) - camera.fracX;
+            finalY = (blockPos.getY() - finalY) - camera.fracY;
+            finalZ = (blockPos.getZ() - finalZ) - camera.fracZ;
 
-
-                tmm_buffer.putFloat(sectionIndex * 16, -finalX);
-                tmm_buffer.putFloat(sectionIndex * 16 + 4, -finalY);
-                tmm_buffer.putFloat(sectionIndex * 16 + 8, -finalZ);
-            }
+            tmm_buffer.putFloat(sectionIndex * 16, -finalX);
+            tmm_buffer.putFloat(sectionIndex * 16 + 4, -finalY);
+            tmm_buffer.putFloat(sectionIndex * 16 + 8, -finalZ);
         }
     }
 }
