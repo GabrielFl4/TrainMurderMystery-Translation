@@ -8,6 +8,8 @@ import dev.doctor4t.trainmurdermystery.api.TMMRoles;
 import dev.doctor4t.trainmurdermystery.cca.GameWorldComponent;
 import dev.doctor4t.trainmurdermystery.cca.PlayerMoodComponent;
 import dev.doctor4t.trainmurdermystery.cca.PlayerPoisonComponent;
+import dev.doctor4t.trainmurdermystery.event.IsPlayerPunchable;
+import dev.doctor4t.trainmurdermystery.event.AllowPlayerPunching;
 import dev.doctor4t.trainmurdermystery.game.GameConstants;
 import dev.doctor4t.trainmurdermystery.game.GameFunctions;
 import dev.doctor4t.trainmurdermystery.index.TMMDataComponentTypes;
@@ -83,7 +85,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @WrapMethod(method = "attack")
     public void attack(Entity target, Operation<Void> original) {
         PlayerEntity self = (PlayerEntity) (Object) this;
-        if (!GameFunctions.isPlayerAliveAndSurvival(self) || this.getMainHandStack().isOf(TMMItems.KNIFE)) {
+        if (!GameFunctions.isPlayerAliveAndSurvival(self) || this.getMainHandStack().isOf(TMMItems.KNIFE)
+                || IsPlayerPunchable.EVENT.invoker().gotPunchable(target) || AllowPlayerPunching.EVENT.invoker().allowPunching(self)) {
             original.call(target);
         }
 
