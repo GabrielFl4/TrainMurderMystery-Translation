@@ -75,6 +75,7 @@ public class TMM implements ModInitializer {
             SetBoundCommand.register(dispatcher);
             AutoStartCommand.register(dispatcher);
             LockToSupportersCommand.register(dispatcher);
+            SetRandomSpawnCommand.register(dispatcher);
         }));
 
         // server lock to supporters

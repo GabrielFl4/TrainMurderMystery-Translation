@@ -173,11 +173,56 @@ public class GameFunctions {
             player.dismountVehicle();
         }
 
-        // teleport players to play area
-        for (ServerPlayerEntity player : players) {
-            player.changeGameMode(GameMode.ADVENTURE);
-            Vec3d pos = player.getPos().add(GameConstants.PLAY_OFFSET);
-            player.requestTeleport(pos.getX(), pos.getY()+1, pos.getZ());
+        // teleport players to play area (Now with randomMode)
+        if (gameComponent.getSpawnMode() == GameWorldComponent.SpawnMode.SHUFFLE) {
+            List<Vec3d> targetPositions = new ArrayList<>(players.size());
+            for (ServerPlayerEntity player : players) {
+                Vec3d basePos = player.getPos().add(GameConstants.PLAY_OFFSET);
+                targetPositions.add(new Vec3d(basePos.getX(), basePos.getY() + 1, basePos.getZ()));
+            }
+            Collections.shuffle(targetPositions);
+
+            int index = 0;
+            for (ServerPlayerEntity player : players) {
+                player.changeGameMode(GameMode.ADVENTURE);
+                Vec3d target = targetPositions.get(index++);
+                player.requestTeleport(target.getX(), target.getY(), target.getZ());
+            }
+        } else if (gameComponent.getSpawnMode() == GameWorldComponent.SpawnMode.RANDOM_POS && !GameConstants.RANDOM_SPAWN_POSITIONS.isEmpty()) {
+            List<GameConstants.SpawnPoint> pool = new ArrayList<>(GameConstants.RANDOM_SPAWN_POSITIONS);
+            Collections.shuffle(pool);
+
+            int playerCount = players.size();
+            List<GameConstants.SpawnPoint> assignments = new ArrayList<>(playerCount);
+            int uniqueCount = Math.min(playerCount, pool.size());
+
+            for (int i = 0; i < uniqueCount; i++) {
+                assignments.add(pool.get(i));
+            }
+
+            if (playerCount > pool.size()) {
+                int remaining = playerCount - pool.size();
+                for (int i = 0; i < remaining; i++) {
+                    assignments.add(pool.get(i % pool.size()));
+                }
+            }
+
+            Collections.shuffle(assignments);
+
+            int index = 0;
+            for (ServerPlayerEntity player : players) {
+                player.changeGameMode(GameMode.ADVENTURE);
+                GameConstants.SpawnPoint spawnPoint = assignments.get(index++);
+                Vec3d target = spawnPoint.pos();
+                var teleportTarget = new TeleportTarget(player.getServerWorld(), target, Vec3d.ZERO, spawnPoint.yaw(), spawnPoint.pitch(), TeleportTarget.NO_OP);
+                player.teleportTo(teleportTarget);
+            }
+        } else {
+            for (ServerPlayerEntity player : players) {
+                player.changeGameMode(GameMode.ADVENTURE);
+                Vec3d pos = player.getPos().add(GameConstants.PLAY_OFFSET);
+                player.requestTeleport(pos.getX(), pos.getY() + 1, pos.getZ());
+            }
         }
 
         // teleport non playing players

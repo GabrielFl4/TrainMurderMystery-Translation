@@ -36,6 +36,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
 
     private boolean lockedToSupporters = false;
     private boolean enableWeights = false;
+    private SpawnMode spawnMode = SpawnMode.DISABLED;
 
     public void setWeightsEnabled(boolean enabled) {
         this.enableWeights = enabled;
@@ -60,6 +61,17 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
         GameMode(int startTime) {
             this.startTime = startTime;
         }
+
+        @Override
+        public String asString() {
+            return name();
+        }
+    }
+
+    public enum SpawnMode implements StringIdentifiable {
+        DISABLED,
+        SHUFFLE,
+        RANDOM_POS;
 
         @Override
         public String asString() {
@@ -221,10 +233,26 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
         this.lockedToSupporters = lockedToSupporters;
     }
 
+    public SpawnMode getSpawnMode() {
+        return spawnMode;
+    }
+
+    public void setSpawnMode(SpawnMode spawnMode) {
+        this.spawnMode = spawnMode;
+        this.sync();
+    }
+
     @Override
     public void readFromNbt(@NotNull NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         this.lockedToSupporters = nbtCompound.getBoolean("LockedToSupporters");
         this.enableWeights = nbtCompound.getBoolean("EnableWeights");
+        if (nbtCompound.contains("SpawnMode")) {
+            this.spawnMode = SpawnMode.valueOf(nbtCompound.getString("SpawnMode"));
+        } else if (nbtCompound.getBoolean("RandomSpawns")) {
+            this.spawnMode = SpawnMode.SHUFFLE;
+        } else {
+            this.spawnMode = SpawnMode.DISABLED;
+        }
 
         this.gameMode = GameMode.valueOf(nbtCompound.getString("GameMode"));
         this.gameStatus = GameStatus.valueOf(nbtCompound.getString("GameStatus"));
@@ -255,6 +283,7 @@ public class GameWorldComponent implements AutoSyncedComponent, ServerTickingCom
     public void writeToNbt(@NotNull NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         nbtCompound.putBoolean("LockedToSupporters", lockedToSupporters);
         nbtCompound.putBoolean("EnableWeights", enableWeights);
+        nbtCompound.putString("SpawnMode", spawnMode.name());
 
         nbtCompound.putString("GameMode", gameMode.name());
         nbtCompound.putString("GameStatus", this.gameStatus.toString());

@@ -57,6 +57,30 @@ public interface GameConstants {
     Box PLAY_AREA = new Box(-140, 118, -535.5f - 15, 230, 200, -535.5f + 15);
     Box BACKUP_TRAIN_LOCATION = new Box(-57, 64, -531, 177, 74, -541);
     Box TRAIN_LOCATION = BACKUP_TRAIN_LOCATION.offset(0, 55, 0);
+    record SpawnPoint(Vec3d pos, float yaw, float pitch) {
+    }
+    List<SpawnPoint> RANDOM_SPAWN_POSITIONS = List.of(
+            new SpawnPoint(new Vec3d(-36.5, 122.0, -535.5), -152f, 0f),
+            new SpawnPoint(new Vec3d(-10.5, 122.0, -536.5), -60f, 0f),
+            new SpawnPoint(new Vec3d(-12.5, 122.0, -534.5), 90f, 0f),
+            new SpawnPoint(new Vec3d(-3.5, 122.0, -536.5), -90f, 0f),
+            new SpawnPoint(new Vec3d(1.5, 122.0, -534.5), 160f, 0f),
+            new SpawnPoint(new Vec3d(6.5, 122.0, -534.5), 140f, 0f),
+            new SpawnPoint(new Vec3d(36.5, 122.0, -536.5), 20f, 0f),
+            new SpawnPoint(new Vec3d(41.5, 122.0, -534.5), 165f, 0f),
+            new SpawnPoint(new Vec3d(42.5, 122.0, -536.5), 30f, 0f),
+            new SpawnPoint(new Vec3d(28.5, 122.0, -534.5), -135f, 0f),
+            new SpawnPoint(new Vec3d(84.5, 122.0, -534.5), -90f, 0f),
+            new SpawnPoint(new Vec3d(89.5, 122.0, -536.5), 0f, 0f),
+            new SpawnPoint(new Vec3d(95.5, 122.0, -535.5), -135f, 0f),
+            new SpawnPoint(new Vec3d(93.5, 122.0, -534.5), 150f, 0f),
+            new SpawnPoint(new Vec3d(78.5, 122.0, -536.5), 45f, 0f),
+            new SpawnPoint(new Vec3d(128.5, 122.0, -536.5), -35f, 0f),
+            new SpawnPoint(new Vec3d(135.5, 122.0, -537.5), 10f, 0f),
+            new SpawnPoint(new Vec3d(132.5, 122.0, -534.5), -90f, 0f),
+            new SpawnPoint(new Vec3d(141.5, 122.0, -534.5), -180f, 0f),
+            new SpawnPoint(new Vec3d(148.5, 122.0, -535.5), -90f, 0f)
+    );
 
     // Task Variables
     float MOOD_GAIN = 0.5f;
